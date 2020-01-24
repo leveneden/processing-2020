@@ -5,7 +5,7 @@ import common.model.Updatable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.awt.*;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
