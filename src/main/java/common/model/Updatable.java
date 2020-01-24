@@ -1,4 +1,4 @@
-package criptographic_squares.model;
+package common.model;
 
 public interface Updatable {
     void update();

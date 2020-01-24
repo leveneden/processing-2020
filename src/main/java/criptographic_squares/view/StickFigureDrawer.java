@@ -1,18 +1,18 @@
-package criptographic_squares.view.impl;
+package criptographic_squares.view;
 
-import criptographic_squares.model.Drawable;
+import common.model.Drawable;
 import criptographic_squares.model.Stick;
 import criptographic_squares.model.StickFigure;
-import criptographic_squares.view.AbstractDrawer;
+import common.view.AbstractDrawer;
 import processing.core.PApplet;
 
 public class StickFigureDrawer extends AbstractDrawer {
 
     private StickDrawer stickDrawer;
 
-    public StickFigureDrawer(PApplet drawer) {
-        super(drawer);
-        stickDrawer = new StickDrawer(drawer);
+    public StickFigureDrawer(PApplet processing) {
+        super(processing);
+        stickDrawer = new StickDrawer(processing);
     }
 
     @Override

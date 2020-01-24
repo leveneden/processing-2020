@@ -1,8 +1,8 @@
 package criptographic_squares;
 
+import common.view.AbstractDrawer;
 import criptographic_squares.model.StickFigure;
-import criptographic_squares.view.Drawer;
-import criptographic_squares.view.impl.StickFigureDrawer;
+import criptographic_squares.view.StickFigureDrawer;
 import processing.core.PApplet;
 
 import java.awt.Point;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CriptoSquareApplication extends PApplet {
 
-    private Drawer drawer;
+    private AbstractDrawer drawer;
 
     @Override
     public void settings() {
@@ -157,15 +157,20 @@ public class CriptoSquareApplication extends PApplet {
                                 toFormattedBinaryString((int) (Math.random() * 4096))
                         )
                 );
-/*
+
+        visualizeFrame(frame);
+    }
+
+    private void visualizeFrame(int frame) {
         stroke(255, 0, 0);
         line(frame, 0, frame, height);
         line(width - frame, 0, width - frame, height);
         line(0, frame, width, frame);
         line(0, height - frame, width, height - frame);
         noStroke();
-*/
     }
+
+    // --------------------- End of Impl 2
 
     /*
        FFMPEG NOTES:
@@ -175,6 +180,7 @@ public class CriptoSquareApplication extends PApplet {
        https://video.stackexchange.com/questions/7903/how-to-losslessly-encode-a-jpg-image-sequence-to-a-video-in-ffmpeg
        ffmpeg -framerate 5 -i frame_%03d.png -codec copy render.mkv // higher fidelity output
        ffmpeg -f image2 -r 5 -i frame_%03d.png -vcodec libx264 -profile:v high444 -refs 16 -crf 0 -preset ultrafast uploadable-render.mp4 // high fidelity and not uploadable
+       https://superuser.com/questions/1331034/vlc-can-but-instagram-and-gallery-cannot-play-my-videos
        ffmpeg -i render.mp4 -pix_fmt yuv420p -vcodec libx264 -preset veryslow timelapse.mp4 // magical command that makes an mp4 video compatible with instagram
      */
 }
