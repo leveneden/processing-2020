@@ -43,7 +43,5 @@ public class TracingEyesApplication extends PApplet {
 
     public static void main(String... art) {
         PApplet.main("tracing_eyes.TracingEyesApplication");
-
-        print(sqrt((float)((0.7525766949 * 0.7525766949) + (0.65850460803 * 0.65850460803))));
     }
 }
