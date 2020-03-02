@@ -6,23 +6,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import processing.core.PVector;
 
-import java.awt.Point;
-
 @Data
 public class Eye implements Drawable, Updatable {
 
-    private Point position;
+    private PVector position;
     private int diameter;
     private Pupil pupil;
 
-    public Eye(Point position, int diameter, int pupilDiameter, PVector lookingAt) throws InstantiationException {
+    public Eye(PVector position, int diameter, int pupilDiameter, PVector lookingAt) throws InstantiationException {
 
         if (pupilDiameter > diameter)
             throw new InstantiationException("The pupil can't be wider than the eye itself.");
 
         this.position = position;
         this.diameter = diameter;
-        this.pupil = new Pupil(new PVector(position.x, position.y), pupilDiameter, lookingAt);
+        this.pupil = new Pupil(position.copy(), pupilDiameter, lookingAt);
         update();
     }
 
@@ -36,7 +34,7 @@ public class Eye implements Drawable, Updatable {
         pupil.update();
     }
 
-    public void setPosition(Point position) {
+    public void setPosition(PVector position) {
         this.position = position;
         update();
     }
@@ -66,10 +64,10 @@ public class Eye implements Drawable, Updatable {
                 // Normalize V
                 // Multiply V * (eye radius - pupil radius)
                 // position = V
-            if (lookingAt.dist(new PVector(Eye.this.position.x, Eye.this.position.y)) < (float) ( Eye.this.diameter - diameter)/2 ) {
+            if (lookingAt.dist(Eye.this.position) < (float) ( Eye.this.diameter - diameter)/2 ) {
                 position = lookingAt.copy();
             } else {
-                position = new PVector(Eye.this.position.x, Eye.this.position.y).add(lookingAt.sub(position).normalize().mult((float) ( Eye.this.diameter - diameter)/2));
+                position = Eye.this.position.copy().add(lookingAt.sub(position).normalize().mult((float) ( Eye.this.diameter - diameter)/2));
             }
         }
 
