@@ -19,18 +19,15 @@ public class EyeDrawer extends AbstractDrawer {
     }
 
     private void drawSclera(Eye eye) {
-        noStroke();
+        processing.noStroke();
         processing.fill(255);
-        //processing.ellipse(eye.getPosition().x, eye.getPosition().y, eye.getScleraDiameter(), eye.getScleraDiameter());
+        processing.ellipse(eye.getPosition().x, eye.getPosition().y, eye.getDiameter(), eye.getDiameter());
     }
 
     private void drawPupil(Eye eye) {
-        noStroke();
-        processing.fill(0);
-        //processing.ellipse(eye.getPosition().x, eye.getPosition().y, eye.getPupilDiameter(), eye.getPupilDiameter());
-    }
-
-    private void noStroke() {
         processing.noStroke();
+        processing.fill(0);
+
+        processing.ellipse(eye.getPupil().getPosition().x, eye.getPupil().getPosition().y, eye.getPupil().getDiameter(), eye.getPupil().getDiameter());
     }
 }

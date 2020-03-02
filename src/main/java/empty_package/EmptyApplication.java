@@ -17,10 +17,10 @@ public class EmptyApplication extends PApplet {
     @Override
     public void draw() {
         noLoop();
-        System.exit(0);
+        //System.exit(0);
     }
 
     public static void main(String... art) {
-        PApplet.main("tracing_eyes.TracingEyesApplication");
+        PApplet.main("empty_package.EmptyApplication");
     }
 }
