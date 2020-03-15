@@ -60,15 +60,12 @@ public class Eye implements Drawable {
     }
 
     private void drawPupil(PApplet processing) {
-        processing.noStroke();
-        processing.fill(0);
-
-        processing.ellipse(this.getPupil().getPosition().x, this.getPupil().getPosition().y, this.getPupil().getDiameter(), this.getPupil().getDiameter());
+        this.pupil.draw(processing);
     }
 
     @Data
     @AllArgsConstructor
-    public class Pupil {
+    public class Pupil implements Drawable {
 
         private PVector position;
         private int diameter;
@@ -111,6 +108,14 @@ public class Eye implements Drawable {
         public void setLookingAt(PVector lookingAt) {
             this.lookingAt = lookingAt;
             update();
+        }
+
+        @Override
+        public void draw(PApplet processing) {
+            processing.noStroke();
+            processing.fill(0);
+
+            processing.ellipse(this.getPosition().x, this.getPosition().y, this.getDiameter(), this.getDiameter());
         }
     }
 }
