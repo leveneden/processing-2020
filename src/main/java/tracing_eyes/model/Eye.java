@@ -49,21 +49,21 @@ public class Eye implements Drawable {
 
     @Override
     public void draw(PApplet processing) {
-        drawSclera(this, processing);
-        drawPupil(this, processing);
+        drawSclera(processing);
+        drawPupil(processing);
     }
 
-    private void drawSclera(Eye eye, PApplet processing) {
+    private void drawSclera(PApplet processing) {
         processing.noStroke();
         processing.fill(255);
-        processing.ellipse(eye.getPosition().x, eye.getPosition().y, eye.getDiameter(), eye.getDiameter());
+        processing.ellipse(this.getPosition().x, this.getPosition().y, this.getDiameter(), this.getDiameter());
     }
 
-    private void drawPupil(Eye eye, PApplet processing) {
+    private void drawPupil(PApplet processing) {
         processing.noStroke();
         processing.fill(0);
 
-        processing.ellipse(eye.getPupil().getPosition().x, eye.getPupil().getPosition().y, eye.getPupil().getDiameter(), eye.getPupil().getDiameter());
+        processing.ellipse(this.getPupil().getPosition().x, this.getPupil().getPosition().y, this.getPupil().getDiameter(), this.getPupil().getDiameter());
     }
 
     @Data
