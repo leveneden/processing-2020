@@ -1,8 +1,6 @@
 package criptographic_squares;
 
-import common.view.AbstractDrawer;
 import criptographic_squares.model.StickFigure;
-import criptographic_squares.view.StickFigureDrawer;
 import processing.core.PApplet;
 
 import java.awt.Point;
@@ -10,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CriptoSquareApplication extends PApplet {
-
-    private AbstractDrawer drawer;
 
     @Override
     public void settings() {
@@ -24,20 +20,18 @@ public class CriptoSquareApplication extends PApplet {
         fill(0);
         background(255);
         frameRate(5);
-
-        drawer = new StickFigureDrawer(this);
     }
 
     @Override
     public void draw() {
 
-        for (int i = 0; i < 50; i++) {
+        // for (int i = 0; i < 50; i++) {
             drawRandomShapes(2, 10, 90);
             // save("src/main/resources/criptographic_squares/render/frame_" + String.format("%03d", i) + ".png");
-        }
+        // }
 
-        noLoop();
-        System.exit(0);
+        // noLoop();
+        // System.exit(0);
     }
 
     public static void main(String... art) {
@@ -86,13 +80,13 @@ public class CriptoSquareApplication extends PApplet {
         for (int col = 0; col < ((innerSquareSize * 5) + margin) * 64 ; col = col + (innerSquareSize * 5) + margin) {
             for (int row = 0; row < ((innerSquareSize * 5) + margin) * 64 ; row = row + (innerSquareSize * 5) + margin) {
                 if (currentIndex < 4096) {
-                    drawer.draw(
-                            new StickFigure(
-                                    new Point(row, col),
-                                    innerSquareSize,
-                                    orderedStates.get(currentIndex)
-                            )
-                    );
+                    new StickFigure(
+                            new Point(row, col),
+                            innerSquareSize,
+                            orderedStates.get(currentIndex)
+                    )
+                    .draw(this);
+
                     currentIndex++;
                 } else {
                     break;
@@ -150,13 +144,12 @@ public class CriptoSquareApplication extends PApplet {
         background(255);
         for (int i = frame; i < width - frame - innerSquareSize *5; i += innerSquareSize * 5 + margin)
             for (int j = frame; j < height - frame - innerSquareSize *5; j += innerSquareSize * 5 + margin)
-                drawer.draw(
-                        new StickFigure(
-                                new Point(j, i),
-                                innerSquareSize,
-                                toFormattedBinaryString((int) (Math.random() * 4096))
-                        )
-                );
+                new StickFigure(
+                    new Point(j, i),
+                    innerSquareSize,
+                    toFormattedBinaryString((int) (Math.random() * 4096))
+                )
+                .draw(this);
 
         visualizeFrame(frame);
     }

@@ -1,9 +1,11 @@
 package criptographic_squares.model;
 
-import common.model.Drawable;
-import common.model.Updatable;
+import common.Drawable;
+import common.Updatable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NonNull;
+import processing.core.PApplet;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -29,20 +31,9 @@ public final class StickFigure implements Drawable, Updatable {
         }
     }
 
-    public void setPosition(Point position) {
-        this.position = position;
-        update();
-    }
-
-    public void setInnerSquareSize(int innerSquareSize) {
-        this.innerSquareSize = innerSquareSize;
-        update();
-    }
-
     public void setSticks(List<Stick> sticks) {
         if (sticks.size() == 12) {
             this.sticks = sticks;
-            update();
         } else {
             throwInputMissmatchException();
         }
@@ -59,6 +50,12 @@ public final class StickFigure implements Drawable, Updatable {
     @Override
     public void update() {
         updateSticks();
+    }
+
+    @Override
+    public void draw(PApplet processing) {
+        update();
+        sticks.forEach(s -> s.draw(processing));
     }
 
     private void initializeSticks(String binaryString) {
@@ -86,11 +83,11 @@ public final class StickFigure implements Drawable, Updatable {
     }
 
     private String reverseString(String stringToReverse) {
-        String reversedString = "";
+        StringBuilder reversedString = new StringBuilder();
         for (int i = stringToReverse.length() - 1; i >= 0; i--) {
-            reversedString += stringToReverse.charAt(i);
+            reversedString.append(stringToReverse.charAt(i));
         }
-        return reversedString;
+        return reversedString.toString();
     }
 
     private Point getPointForStickIndex(int index) {
@@ -145,10 +142,10 @@ public final class StickFigure implements Drawable, Updatable {
     }
 
     private void updateSticks() {
-        String currentState = "";
+        StringBuilder currentState = new StringBuilder();
         for (Stick stick : sticks)
-            currentState += stick.isPresent() ? "1" : "0";
-        updateSticks(currentState);
+            currentState.append(stick.isPresent() ? "1" : "0");
+        updateSticks(currentState.toString());
     }
 
     private void updateSticks(String binaryString) {

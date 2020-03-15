@@ -1,4 +1,4 @@
-package common.model;
+package common;
 
 public interface Updatable {
     void update();
