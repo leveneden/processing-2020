@@ -8,7 +8,7 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 @Data
-public class Eye implements Drawable, Updatable {
+public class Eye implements Updatable, Drawable {
 
     private PVector position;
     private int diameter;
@@ -32,33 +32,42 @@ public class Eye implements Drawable, Updatable {
 
     @Override
     public void draw(PApplet processing) {
-        update();
         drawSclera(processing);
-        pupil.draw(processing);
+        drawPupil(processing);
     }
 
     private void updatePupil() {
         pupil.update();
     }
 
+    private void drawSclera(PApplet processing) {
+        processing.noStroke();
+        processing.fill(255);
+        processing.ellipse(this.getPosition().x, this.getPosition().y, this.getDiameter(), this.getDiameter());
+    }
+
+    private void drawPupil(PApplet processing) {
+        this.pupil.draw(processing);
+    }
+
     // setters
+    public void setPosition(PVector position) {
+        this.position = position;
+        update();
+    }
+
     public void setDiameter(int diameter) {
         if (diameter > pupil.getDiameter()) {
             this.diameter = diameter;
         } else {
             throw new IllegalArgumentException("The pupil can't be wider than the eye itself.");
         }
-    }
-
-    private void drawSclera(PApplet processing) {
-        processing.noStroke();
-        processing.fill(255);
-        processing.ellipse(position.x, position.y, diameter, diameter);
+        update();
     }
 
     @Data
     @AllArgsConstructor
-    public class Pupil implements Drawable, Updatable {
+    public class Pupil implements Updatable, Drawable {
 
         private PVector position;
         private int diameter;
@@ -71,19 +80,19 @@ public class Eye implements Drawable, Updatable {
 
         @Override
         public void draw(PApplet processing) {
-            update();
             processing.noStroke();
             processing.fill(0);
-            processing.ellipse(position.x, position.y, diameter, diameter);
+
+            processing.ellipse(this.getPosition().x, this.getPosition().y, this.getDiameter(), this.getDiameter());
         }
 
         private void updatePosition() {
             // if lookingAt is within the eye radius - pupil radius
-            if (lookingAt.dist(Eye.this.position) < (float) ( Eye.this.diameter - diameter)/2 ) {
+            if (lookingAt.dist(Eye.this.position) < (float) (Eye.this.diameter - diameter) / 2) {
                 // position = lookingAt
                 position = lookingAt.copy();
             } else {
-            // else
+                // else
                 // Get the vector V = (lookingAt - position)
                 // Normalize V
                 // Multiply V * (eye radius - pupil radius)
@@ -93,12 +102,23 @@ public class Eye implements Drawable, Updatable {
         }
 
         // setters
+        public void setPosition(PVector position) {
+            this.position = position;
+            update();
+        }
+
         public void setDiameter(int diameter) {
             if (diameter < Eye.this.diameter) {
                 this.diameter = diameter;
             } else {
                 throw new IllegalArgumentException("The pupil can't be wider than the eye itself.");
             }
+            update();
+        }
+
+        public void setLookingAt(PVector lookingAt) {
+            this.lookingAt = lookingAt;
+            update();
         }
     }
 }
