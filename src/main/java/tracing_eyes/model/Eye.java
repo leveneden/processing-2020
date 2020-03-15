@@ -1,14 +1,11 @@
 package tracing_eyes.model;
 
-import common.Drawable;
-import common.Updatable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import processing.core.PApplet;
 import processing.core.PVector;
 
 @Data
-public class Eye implements Drawable, Updatable {
+public class Eye {
 
     private PVector position;
     private int diameter;
@@ -25,57 +22,36 @@ public class Eye implements Drawable, Updatable {
         update();
     }
 
-    @Override
     public void update() {
         updatePupil();
     }
 
-    @Override
-    public void draw(PApplet processing) {
-        update();
-        drawSclera(processing);
-        pupil.draw(processing);
-    }
-
+    // setters
     private void updatePupil() {
         pupil.update();
     }
 
-    // setters
+    public void setPosition(PVector position) {
+        this.position = position;
+        update();
+    }
+
     public void setDiameter(int diameter) {
         if (diameter > pupil.getDiameter()) {
             this.diameter = diameter;
         } else {
             throw new IllegalArgumentException("The pupil can't be wider than the eye itself.");
         }
-    }
-
-    private void drawSclera(PApplet processing) {
-        processing.noStroke();
-        processing.fill(255);
-        processing.ellipse(position.x, position.y, diameter, diameter);
+        update();
     }
 
     @Data
     @AllArgsConstructor
-    public class Pupil implements Drawable, Updatable {
+    public class Pupil {
 
         private PVector position;
         private int diameter;
         private PVector lookingAt;
-
-        @Override
-        public void update() {
-            updatePosition();
-        }
-
-        @Override
-        public void draw(PApplet processing) {
-            update();
-            processing.noStroke();
-            processing.fill(0);
-            processing.ellipse(position.x, position.y, diameter, diameter);
-        }
 
         private void updatePosition() {
             // if lookingAt is within the eye radius - pupil radius
@@ -83,7 +59,7 @@ public class Eye implements Drawable, Updatable {
                 // position = lookingAt
                 position = lookingAt.copy();
             } else {
-            // else
+                // else
                 // Get the vector V = (lookingAt - position)
                 // Normalize V
                 // Multiply V * (eye radius - pupil radius)
@@ -92,13 +68,28 @@ public class Eye implements Drawable, Updatable {
             }
         }
 
+        public void update() {
+            updatePosition();
+        }
+
         // setters
+        public void setPosition(PVector position) {
+            this.position = position;
+            update();
+        }
+
         public void setDiameter(int diameter) {
             if (diameter < Eye.this.diameter) {
                 this.diameter = diameter;
             } else {
                 throw new IllegalArgumentException("The pupil can't be wider than the eye itself.");
             }
+            update();
+        }
+
+        public void setLookingAt(PVector lookingAt) {
+            this.lookingAt = lookingAt;
+            update();
         }
     }
 }
