@@ -1,11 +1,13 @@
 package tracing_eyes.model;
 
+import common.Drawable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import processing.core.PApplet;
 import processing.core.PVector;
 
 @Data
-public class Eye {
+public class Eye implements Drawable {
 
     private PVector position;
     private int diameter;
@@ -43,6 +45,25 @@ public class Eye {
             throw new IllegalArgumentException("The pupil can't be wider than the eye itself.");
         }
         update();
+    }
+
+    @Override
+    public void draw(PApplet processing) {
+        drawSclera(this, processing);
+        drawPupil(this, processing);
+    }
+
+    private void drawSclera(Eye eye, PApplet processing) {
+        processing.noStroke();
+        processing.fill(255);
+        processing.ellipse(eye.getPosition().x, eye.getPosition().y, eye.getDiameter(), eye.getDiameter());
+    }
+
+    private void drawPupil(Eye eye, PApplet processing) {
+        processing.noStroke();
+        processing.fill(0);
+
+        processing.ellipse(eye.getPupil().getPosition().x, eye.getPupil().getPosition().y, eye.getPupil().getDiameter(), eye.getPupil().getDiameter());
     }
 
     @Data

@@ -30,7 +30,9 @@ public class TracingEyesApplication extends PApplet {
         int separation= 10;
         for (int i = eyeDiameter; i < width - eyeDiameter / 2; i += eyeDiameter + separation) {
             for (int j = 0; j < height - eyeDiameter / 2; j += eyeDiameter + separation) {
-                drawer.draw(new Eye(new PVector(i, j), eyeDiameter, pupilDiameter, new PVector(((float) mouseX), ((float) mouseY))));
+                // drawer.draw(new Eye(new PVector(i, j), eyeDiameter, pupilDiameter, new PVector(((float) mouseX), ((float) mouseY))));
+                new Eye(new PVector(i, j), eyeDiameter, pupilDiameter, new PVector(((float) mouseX), ((float) mouseY)))
+                .draw(this);
             }
         }
         //noLoop();
