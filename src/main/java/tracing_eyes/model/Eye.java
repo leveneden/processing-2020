@@ -1,13 +1,14 @@
 package tracing_eyes.model;
 
 import common.Drawable;
+import common.Updatable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import processing.core.PApplet;
 import processing.core.PVector;
 
 @Data
-public class Eye implements Drawable {
+public class Eye implements Updatable, Drawable {
 
     private PVector position;
     private int diameter;
@@ -24,15 +25,32 @@ public class Eye implements Drawable {
         update();
     }
 
+    @Override
     public void update() {
         updatePupil();
     }
 
-    // setters
+    @Override
+    public void draw(PApplet processing) {
+        drawSclera(processing);
+        drawPupil(processing);
+    }
+
     private void updatePupil() {
         pupil.update();
     }
 
+    private void drawSclera(PApplet processing) {
+        processing.noStroke();
+        processing.fill(255);
+        processing.ellipse(this.getPosition().x, this.getPosition().y, this.getDiameter(), this.getDiameter());
+    }
+
+    private void drawPupil(PApplet processing) {
+        this.pupil.draw(processing);
+    }
+
+    // setters
     public void setPosition(PVector position) {
         this.position = position;
         update();
@@ -47,33 +65,30 @@ public class Eye implements Drawable {
         update();
     }
 
-    @Override
-    public void draw(PApplet processing) {
-        drawSclera(processing);
-        drawPupil(processing);
-    }
-
-    private void drawSclera(PApplet processing) {
-        processing.noStroke();
-        processing.fill(255);
-        processing.ellipse(this.getPosition().x, this.getPosition().y, this.getDiameter(), this.getDiameter());
-    }
-
-    private void drawPupil(PApplet processing) {
-        this.pupil.draw(processing);
-    }
-
     @Data
     @AllArgsConstructor
-    public class Pupil implements Drawable {
+    public class Pupil implements Updatable, Drawable {
 
         private PVector position;
         private int diameter;
         private PVector lookingAt;
 
+        @Override
+        public void update() {
+            updatePosition();
+        }
+
+        @Override
+        public void draw(PApplet processing) {
+            processing.noStroke();
+            processing.fill(0);
+
+            processing.ellipse(this.getPosition().x, this.getPosition().y, this.getDiameter(), this.getDiameter());
+        }
+
         private void updatePosition() {
             // if lookingAt is within the eye radius - pupil radius
-            if (lookingAt.dist(Eye.this.position) < (float) ( Eye.this.diameter - diameter)/2 ) {
+            if (lookingAt.dist(Eye.this.position) < (float) (Eye.this.diameter - diameter) / 2) {
                 // position = lookingAt
                 position = lookingAt.copy();
             } else {
@@ -84,10 +99,6 @@ public class Eye implements Drawable {
                 // position = position + V
                 position = Eye.this.position.copy().add(lookingAt.sub(position).normalize().mult((float) (Eye.this.diameter - diameter) / 2));
             }
-        }
-
-        public void update() {
-            updatePosition();
         }
 
         // setters
@@ -108,14 +119,6 @@ public class Eye implements Drawable {
         public void setLookingAt(PVector lookingAt) {
             this.lookingAt = lookingAt;
             update();
-        }
-
-        @Override
-        public void draw(PApplet processing) {
-            processing.noStroke();
-            processing.fill(0);
-
-            processing.ellipse(this.getPosition().x, this.getPosition().y, this.getDiameter(), this.getDiameter());
         }
     }
 }
