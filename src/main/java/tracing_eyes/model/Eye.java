@@ -11,7 +11,7 @@ import processing.core.PVector;
 public class Eye implements Updatable, Drawable {
 
     private PVector position;
-    private int diameter;
+    private float diameter;
     private Pupil pupil;
 
     public Eye(PVector position, int diameter, int pupilDiameter, PVector lookingAt) throws InstantiationException {
@@ -56,7 +56,7 @@ public class Eye implements Updatable, Drawable {
         update();
     }
 
-    public void setDiameter(int diameter) {
+    public void setDiameter(float diameter) {
         if (diameter > pupil.getDiameter()) {
             this.diameter = diameter;
         } else {

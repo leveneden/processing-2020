@@ -4,7 +4,6 @@ import common.Drawable;
 import common.Updatable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
 import processing.core.PApplet;
 
 import java.awt.Point;

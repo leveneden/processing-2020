@@ -9,12 +9,11 @@ public class TracingEyesApplication extends PApplet {
 
     @Override
     public void settings() {
-        size(512, 512);
+        size(256, 192);
     }
 
     @Override
     public void setup() {
-        size(512, 512);
     }
 
     @SneakyThrows
