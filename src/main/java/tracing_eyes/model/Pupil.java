@@ -29,9 +29,9 @@ public class Pupil implements Updatable, Drawable {
         processing.ellipse(this.getPosition().x, this.getPosition().y, this.getDiameter(), this.getDiameter());
     }
 
-    private void updatePosition() {
+    protected void updatePosition() {
         // if lookingAt is within the eye radius - pupil radius
-        if (lookingAt.dist(sclera.getPosition()) < (float) (sclera.getDiameter() - diameter) / 2) {
+        if (lookingAt.dist(sclera.getPosition()) < (sclera.getDiameter() - diameter) / 2) {
             // position = lookingAt
             position = lookingAt.copy();
         } else {
@@ -40,7 +40,7 @@ public class Pupil implements Updatable, Drawable {
             // Normalize V
             // Multiply V * (eye radius - pupil radius)
             // position = position + V
-            position = sclera.getPosition().copy().add(lookingAt.sub(position).normalize().mult((float) (sclera.getDiameter() - diameter) / 2));
+            position = sclera.getPosition().copy().add(lookingAt.sub(position).normalize().mult((sclera.getDiameter() - diameter) / 2));
         }
     }
 
