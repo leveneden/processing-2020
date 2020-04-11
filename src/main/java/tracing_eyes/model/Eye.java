@@ -9,8 +9,8 @@ import processing.core.PVector;
 @Data
 public class Eye implements Updatable, Drawable {
 
-    private Sclera sclera;
-    private Pupil pupil;
+    protected Sclera sclera;
+    protected Pupil pupil;
 
     public Eye(PVector position, float diameter, float pupilDiameter, PVector lookingAt) throws InstantiationException {
 
@@ -33,15 +33,15 @@ public class Eye implements Updatable, Drawable {
         drawPupil(processing);
     }
 
-    private void updatePupil() {
+    protected void updatePupil() {
         pupil.update();
     }
 
-    private void drawSclera(PApplet processing) {
+    protected void drawSclera(PApplet processing) {
         sclera.draw(processing);
     }
 
-    private void drawPupil(PApplet processing) {
+    protected void drawPupil(PApplet processing) {
         this.pupil.draw(processing);
     }
 
@@ -58,5 +58,9 @@ public class Eye implements Updatable, Drawable {
             throw new IllegalArgumentException("The pupil can't be wider than the eye itself.");
         }
         update();
+    }
+
+    public void setLookingAt(PVector lookingAt) {
+        pupil.setLookingAt(lookingAt);
     }
 }
