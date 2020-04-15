@@ -10,6 +10,11 @@ public class GridOfRealisticEyesLookingAtMovingCircleLayout implements Drawable 
 
     @Override
     public void draw(PApplet processing) {
+        // renderBigFrames(processing);
+        renderMediumSizedFrames(processing);
+    }
+
+    private void renderMediumSizedFrames(PApplet processing) {
         int frameCount = 0;
         while (frameCount < 300) {
             PImage frame = processing.loadImage(String.format("src/main/resources/tracing_eyes/render/frames/big/frame_%03d.png", frameCount));
@@ -18,8 +23,6 @@ public class GridOfRealisticEyesLookingAtMovingCircleLayout implements Drawable 
             processing.save(String.format("src/main/resources/tracing_eyes/render/frames/medium/frame_%03d.png", frameCount));
             frameCount++;
         }
-        processing.noLoop();
-        System.exit(0);
     }
 
     private void renderBigFrames(PApplet processing) {
@@ -29,7 +32,7 @@ public class GridOfRealisticEyesLookingAtMovingCircleLayout implements Drawable 
         PVector focalPoint = new PVector();
         PImage watermark = processing.loadImage("src/main/resources/tracing_eyes/sprites/frame-watermark.png");
 
-        for (int degrees = 0; degrees < 3600; degrees += 12) {
+        for (int degrees = 3600; degrees > 0; degrees -= 12) {
             focalPoint.x = center.x + PApplet.sin(PApplet.radians(degrees)) * distanceFromCenter;
             focalPoint.y = center.y + PApplet.cos(PApplet.radians(degrees)) * distanceFromCenter;
             drawEyesGridLookingAt(focalPoint, processing);

@@ -13,7 +13,8 @@ public class TracingEyesApplication extends PApplet {
 
     @Override
     public void settings() {
-        size(720, 540);
+        size(720, 540); // medium
+        // size(2048, 1536); // big
     }
 
     @Override
@@ -23,6 +24,8 @@ public class TracingEyesApplication extends PApplet {
     @Override
     public void draw() {
         new GridOfRealisticEyesLookingAtMovingCircleLayout().draw(this);
+        noLoop();
+        System.exit(0);
     }
 
     public static void main(String... art) {
