@@ -17,61 +17,60 @@ public class FractalMosaic implements Drawable {
     @Override
     public void draw(PApplet processing) {
         // cargar imagen
-        PImage image = processing.loadImage(imageLocation);
+        PositionedImage image = new PositionedImage(processing.loadImage(imageLocation));
+
+        image.setX(processing.width / 2 - image.getWidth() / 2);
+        image.setY(processing.height / 2 - image.getHeight() / 2);
+
         // 1. calcular el tamaño de la imagen a producir
-        Point size = getSizeOfEndResult(image.width, image.height);
-        Point imageLocation = new Point(
-                processing.width / 2 - image.width / 2,
-                processing.height / 2 - image.height / 2
-        );
-        recursivelyDrawImageMultipleTimesFormingAFrame(processing, image, imageLocation);
+        Point size = getSizeOfEndResult(image.getWidth(), image.getHeight());
+        recursivelyDrawImageMultipleTimesFormingAFrame(processing, image);
         // 2. colocar la imagen en el sentro del lienzo
-        processing.image(image, imageLocation.x, imageLocation.y);
+        processing.image(image.get(), image.getX(), image.getY());
     }
 
-    private void recursivelyDrawImageMultipleTimesFormingAFrame(PApplet processing, PImage previousImage, Point previousImageLocation) {
-
+    private void recursivelyDrawImageMultipleTimesFormingAFrame(PApplet processing, PositionedImage previousImage) {
         // 3. redimensionar la imagen original a un cuarto de su tamaño
-        PImage image = previousImage.copy();
+        PositionedImage image = previousImage.copy();
         resizeToAQuarter(image);
         // 5. si la imagen resultante tiene los lados más grandes que 1
-        if (image.width > 1 && image.height > 1) {
+        if (image.getWidth() > 1 && image.getHeight() > 1) {
             // encontrar la nueva posicion de la imagen mas pequeña
-            Point imageLocation = new Point(image.width / 2, image.height / 2);
+            Point imageLocation = new Point(image.getWidth() / 2, image.getHeight() / 2);
             // llamada recursiva
-            recursivelyDrawImageMultipleTimesFormingAFrame(processing, image, imageLocation);
+            recursivelyDrawImageMultipleTimesFormingAFrame(processing, image);
             // 4. dibujar marco
-            drawFrame(processing, image, previousImageLocation);
-            
+            drawFrame(processing, image);
+
         }
     }
 
-    private void drawFrame(PApplet processing, PImage image, Point previousImageLocation) {
-
+    private void drawFrame(PApplet processing, PositionedImage image) {
+        // TODO: implement
     }
 
-    private void resizeToAQuarter(PImage image) {
+    private void resizeToAQuarter(PositionedImage image) {
         int newWidth = 0;
         int newHeight = 0;
         
         // check if you can divide each side uniformly
-        if (image.width % 2 == 0) {
+        if (image.getWidth() % 2 == 0) {
             // if you can, do it
-            newWidth = image.width / 2;
+            newWidth = image.getWidth() / 2;
         } else {
             // otherwise, cut it in half + 1
-            newWidth = image.width / 2 + 1;
+            newWidth = image.getWidth() / 2 + 1;
         }
 
-        if (image.height % 2 == 0) {
+        if (image.getHeight() % 2 == 0) {
             // if you can, do it
-            newHeight = image.height / 2;
+            newHeight = image.getHeight() / 2;
         } else {
             // otherwise, cut it in half + 1
-            newHeight = image.height / 2 + 1;
+            newHeight = image.getHeight() / 2 + 1;
         }
         
-        image.resize(newWidth, newHeight);
+        image.get().resize(newWidth, newHeight);
     }
     
     private Point getSizeOfEndResult(int imageWidth, int imageHeight) {
