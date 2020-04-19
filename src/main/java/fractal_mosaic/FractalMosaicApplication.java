@@ -11,7 +11,6 @@ public class FractalMosaicApplication extends PApplet {
 
     @Override
     public void setup() {
-
     }
 
     @Override
@@ -21,6 +20,6 @@ public class FractalMosaicApplication extends PApplet {
     }
 
     public static void main(String... art) {
-        PApplet.main("empty_package.EmptyApplication");
+        PApplet.main("fractal_mosaic.FractalMosaicApplication");
     }
 }
