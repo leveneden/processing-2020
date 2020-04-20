@@ -14,7 +14,7 @@ public class PositionedImage implements Drawable {
 
     private PImage image;
     @Getter @Setter
-    private Point position;
+    private Point position = new Point();
 
     public PositionedImage(PImage image) {
         this.image = image;
