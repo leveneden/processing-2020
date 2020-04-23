@@ -7,7 +7,7 @@ public class FractalMosaicApplication extends PApplet {
 
     @Override
     public void settings() {
-        size(596, 596);
+        size(1280, 1280);
     }
 
     @Override
@@ -19,7 +19,8 @@ public class FractalMosaicApplication extends PApplet {
         FractalMosaic mosaic = new FractalMosaic("src/3tfNVZHl_400x400.jpg"); // 3tfNVZHl_400x400
         mosaic.draw(this);
         noLoop();
-        //System.exit(0);
+        save("whatsgoinon.png");
+        System.exit(0);
     }
 
     public static void main(String... art) {

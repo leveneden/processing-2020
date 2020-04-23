@@ -2,21 +2,22 @@ package fractal_mosaic.model;
 
 import common.Drawable;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 import java.awt.*;
 
 public class FractalMosaic implements Drawable {
 
-    private String imageLocation;
+    private String fileName;
 
-    public FractalMosaic(String imageLocation) {
-        this.imageLocation = imageLocation;
+    public FractalMosaic(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override
     public void draw(PApplet processing) {
         // cargar imagen
-        PositionedImage image = new PositionedImage(processing.loadImage(imageLocation));
+        PositionedImage image = new PositionedImage(processing.loadImage(fileName));
 
         image.setX(processing.width / 2 - image.getWidth() / 2);
         image.setY(processing.height / 2 - image.getHeight() / 2);
@@ -24,9 +25,9 @@ public class FractalMosaic implements Drawable {
         // 1. calcular el tamaño de la imagen a producir
         Point size = getSizeOfEndResult(image.getWidth(), image.getHeight());
         System.out.println(String.format("Rrequired window size:\nwidth - %d\nheight - %d", size.x, size.y));
-        recursivelyDrawImageMultipleTimesFormingAFrame(processing, image);
         // 2. colocar la imagen en el sentro del lienzo
-        // processing.image(image.get(), image.getX(), image.getY());
+         processing.image(image.get(), image.getX(), image.getY());
+        recursivelyDrawImageMultipleTimesFormingAFrame(processing, image);
     }
 
     private void recursivelyDrawImageMultipleTimesFormingAFrame(PApplet processing, PositionedImage previousImage) {
@@ -36,11 +37,12 @@ public class FractalMosaic implements Drawable {
         // 5. si la imagen resultante tiene los lados más grandes que 1
         if (image.getWidth() > 1 && image.getHeight() > 1) {
             // encontrar la nueva posicion de la imagen mas pequeña
-            Point imageLocation = new Point(image.getWidth() / 2, image.getHeight() / 2); // todo: HMMMM...
-            // llamada recursiva
-            recursivelyDrawImageMultipleTimesFormingAFrame(processing, image);
+            image.setX(previousImage.getX() - image.getWidth());
+            image.setY(previousImage.getY() -image.getHeight());
             // 4. dibujar marco
             drawFrame(processing, image, previousImage);
+            // llamada recursiva
+            recursivelyDrawImageMultipleTimesFormingAFrame(processing, image);
 
         }
     }
@@ -80,6 +82,11 @@ public class FractalMosaic implements Drawable {
                 processing.image(currentImage.get(), framePosition.x + (distanceBetweenImages.x * 3), y);
             }
         }
+
+    }
+
+    private void drawFrame(PApplet processing, PositionedImage currentImage, PositionedImage previousImage,
+                           Point distanceFromCentralImage) {
 
     }
 
