@@ -27,27 +27,31 @@ public class FractalMosaic implements Drawable {
         System.out.println(String.format("Rrequired window size:\nwidth - %d\nheight - %d", size.x, size.y));
         // 2. colocar la imagen en el sentro del lienzo
          processing.image(image.get(), image.getX(), image.getY());
-        recursivelyDrawImageMultipleTimesFormingAFrame(processing, image);
+        recursivelyDrawImageMultipleTimesFormingAFrame(processing, image, new Point());
     }
 
-    private void recursivelyDrawImageMultipleTimesFormingAFrame(PApplet processing, PositionedImage previousImage) {
-        // 3. redimensionar la imagen original a un cuarto de su tamaño
+    private void recursivelyDrawImageMultipleTimesFormingAFrame(PApplet processing, PositionedImage previousImage, Point distanceFromCentralImage) {
+        // 3. copiar y redimensionar la imagen original a un cuarto de su tamaño
         PositionedImage image = previousImage.copy();
         resizeToAQuarter(image);
+
         // 5. si la imagen resultante tiene los lados más grandes que 1
         if (image.getWidth() > 1 && image.getHeight() > 1) {
-            // encontrar la nueva posicion de la imagen mas pequeña
+
+            // asignar la nueva posicion de la imagen mas pequeña
             image.setX(previousImage.getX() - image.getWidth());
             image.setY(previousImage.getY() -image.getHeight());
+
             // 4. dibujar marco
-            drawFrame(processing, image, previousImage);
+            drawFrame(processing, image, previousImage, distanceFromCentralImage);
+
             // llamada recursiva
-            recursivelyDrawImageMultipleTimesFormingAFrame(processing, image);
+            recursivelyDrawImageMultipleTimesFormingAFrame(processing, image, distanceFromCentralImage);
 
         }
     }
 
-    private void drawFrame(PApplet processing, PositionedImage currentImage, PositionedImage previousImage) {
+    private void drawFrame(PApplet processing, PositionedImage currentImage, PositionedImage previousImage, Point distanceFromCentralImage) {
         // TODO: implement
         Point distanceBetweenImages = new Point(
         // dividir el ancho de la PreviousImage entre dos
@@ -55,6 +59,10 @@ public class FractalMosaic implements Drawable {
         // dividir el ancho de la PreviousImage entre dos
                 previousImage.getHeight() / 2
         );
+
+        // sumar a la distancia desde la imagen central la separación entre imagenes en el marco que se está por dibujar
+        distanceFromCentralImage.translate(distanceBetweenImages.x, distanceBetweenImages.y);
+
         // calcular el punto de inicio
         Point framePosition = new Point(
                 previousImage.getX() - distanceBetweenImages.x,
@@ -63,15 +71,15 @@ public class FractalMosaic implements Drawable {
 
 
         // for (height)
-        for (int y = framePosition.y; y < framePosition.y + (previousImage.getHeight() * 2); y += distanceBetweenImages.y) {
+        for (int y = framePosition.y; y < framePosition.y + (distanceFromCentralImage.y * 4); y += distanceBetweenImages.y) {
         boolean isFirstIteration = y == framePosition.y;
-        boolean isLastIteration = y >= framePosition.y + (distanceBetweenImages.y * 3);
+        boolean isLastIteration = y >= framePosition.y + (distanceFromCentralImage.y * 3);
 
             // if first or last
             if (isFirstIteration || isLastIteration) {
                 // draw row
                 // for (width)
-                for (int x = framePosition.x; x < framePosition.y + (previousImage.getWidth() * 2); x += distanceBetweenImages.x) {
+                for (int x = framePosition.x; x < framePosition.x + (distanceFromCentralImage.x * 4); x += distanceBetweenImages.x) {
                     processing.image(currentImage.get(), x, y);
                 }
 
@@ -79,14 +87,9 @@ public class FractalMosaic implements Drawable {
             } else {
                 // draw only first and last
                 processing.image(currentImage.get(), framePosition.x ,y);
-                processing.image(currentImage.get(), framePosition.x + (distanceBetweenImages.x * 3), y);
+                processing.image(currentImage.get(), framePosition.x + (distanceFromCentralImage.x * 3), y);
             }
         }
-
-    }
-
-    private void drawFrame(PApplet processing, PositionedImage currentImage, PositionedImage previousImage,
-                           Point distanceFromCentralImage) {
 
     }
 
