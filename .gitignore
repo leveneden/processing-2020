@@ -2,6 +2,7 @@
 ## My own
 ##############################
 src/main/resources/tracing_eyes/render/*
+src/main/resources/rgb-transition/output/*
 
 ##############################
 ## Processing
