@@ -8,6 +8,8 @@ import processing.core.PVector;
 import java.util.ArrayList;
 import java.util.List;
 
+// todo: introduce the abstraction of a cluster please, you know it's gonna be messy if you decide not to. It will cost
+//  you runtime.
 @RequiredArgsConstructor
 public class KMeansImageProcessor {
 
