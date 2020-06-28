@@ -16,7 +16,7 @@ public class KMeansImageProcessor {
     private PApplet processing;
 
     public KMeansResult process(int k, String imagePath) {
-        if (k<1) return new KMeansResult(new ArrayList<>(), 0);
+        if (k<1) return new KMeansResult(new ArrayList<>());
         return calculateMeans(k, getPixelsAsPVectors(imagePath));
     }
 

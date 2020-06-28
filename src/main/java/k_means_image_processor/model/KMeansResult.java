@@ -10,6 +10,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class KMeansResult {
 
-    private final List<PVector> centroids;
-    private final double WCSS;
+    private final List<Cluster> cluster;
+    // private final double WCSS;
+
+    public float getWCSS() {
+        // todo: calculate. Maybe change for a BigDecimal if required
+
+        return 0;
+    }
 }
