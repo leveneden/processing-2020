@@ -1,9 +1,12 @@
 package k_means_image_processor;
 
+import k_means_image_processor.model.sorting.DistanceFromOrigin;
 import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class KMeansImageProcessorApplication extends PApplet {
@@ -15,6 +18,7 @@ public class KMeansImageProcessorApplication extends PApplet {
 
     @Override
     public void setup() {
+        testSortingOfPVectorObjects();
     }
 
     @Override
@@ -101,12 +105,7 @@ public class KMeansImageProcessorApplication extends PApplet {
     }
 
     private void testAverageCentroids() {
-        List<PVector> vectors = new ArrayList<>();
-
-        vectors.add(new PVector(14, 5, 19));
-        vectors.add(new PVector(6, 17, 4));
-        vectors.add(new PVector(2, 8, 11));
-        vectors.add(new PVector(9, 16, 3));
+        List<PVector> vectors = createFourVectors();
 
         int timesDivided = 1;
         PVector average = new PVector();
@@ -119,9 +118,7 @@ public class KMeansImageProcessorApplication extends PApplet {
             timesDivided++;
         }
 
-        for (PVector vector: vectors) {
-            debug(vector);
-        }
+        printAll(vectors);
 
         debug(average);
     }
@@ -173,5 +170,28 @@ public class KMeansImageProcessorApplication extends PApplet {
         System.out.println(methodA.equals(methodC));
 
         save("test " + testNum + ".png");
+    }
+
+    private List<PVector> createFourVectors() {
+        List<PVector> vectors = new ArrayList<>();
+        vectors.add(new PVector(14, 5, 19));
+        vectors.add(new PVector(6, 17, 4));
+        vectors.add(new PVector(2, 8, 11));
+        vectors.add(new PVector(9, 16, 3));
+        return vectors;
+    }
+
+    private void printAll(List<PVector> vectors) {
+        for (PVector vector:vectors) debug(vector);
+    }
+
+    private void testSortingOfPVectorObjects() {
+        List<PVector> vectors = createFourVectors();
+
+        System.out.println("====== Showing unordered ======");
+        printAll(vectors);
+        System.out.println("======= Showing ordered =======");
+        vectors.sort(new DistanceFromOrigin());
+        printAll(vectors);
     }
 }

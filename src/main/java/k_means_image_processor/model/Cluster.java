@@ -12,4 +12,8 @@ public class Cluster {
 
     private PVector centroid;
     private List<PVector> vectors;
+
+    public void addVector(PVector vector) {
+        vectors.add(vector);
+    }
 }
