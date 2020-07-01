@@ -43,37 +43,20 @@ public class KMeansImageProcessor {
     }
 
     private KMeansResult calculateMeans(int k, List<PVector> vectors) {
-        // get first clusters
-        List<Cluster> clusters = getFirstClusters(k, vectors);
-        // iterate
-        KMeansResult result = iterate(clusters, vectors);
-
-        return null;
+        return iterate(getFirstClusters(k, vectors), vectors);
     }
 
     private KMeansResult iterate(List<Cluster> clusters, List<PVector> vectors) {
-        // define a method by which to check if the centroids are in the same place as in the previous iterations
         boolean allCentroidsAreInTheirLastPosition = false;
-        // loop
         while (!allCentroidsAreInTheirLastPosition) {
-            // get previous centroids
             List<PVector> lastCentroids = getCentroidsFromClusters(clusters);
-            // erase points in the cluster
             clearAllVectorsFromAllClusters(clusters);
-            // find nearest points to centroids in clusters
             addAllVectorsToTheirNearestCluster(clusters, vectors);
-            // relocate centroids
             relocateAllClustersCentroids(clusters);
-            // get current centroids
             List<PVector> currentCentroids = getCentroidsFromClusters(clusters);
-            // override the check
             allCentroidsAreInTheirLastPosition = areAllCentroidsInTheSamePosition(lastCentroids, currentCentroids);
         }
-        // calculate WCSS
-        float wcss = getAverageWCSS(clusters);
-        // add clusters and WCSS to KMeansResult
-        // return KMeansResult
-        return new KMeansResult(clusters, wcss);
+        return new KMeansResult(clusters, getAverageWCSS(clusters));
     }
 
     private float getAverageWCSS(List<Cluster> clusters) {
@@ -227,6 +210,4 @@ public class KMeansImageProcessor {
         }
         return nearestVector;
     }
-
-
 }
