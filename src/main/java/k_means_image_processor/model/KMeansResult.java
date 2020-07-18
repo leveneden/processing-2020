@@ -9,6 +9,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class KMeansResult {
 
-    private final List<Cluster> cluster;
+    private final List<Cluster> clusters;
     private final float WCSS;
 }

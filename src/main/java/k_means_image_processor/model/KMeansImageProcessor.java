@@ -1,6 +1,7 @@
 package k_means_image_processor.model;
 
 import k_means_image_processor.model.sorting.DistanceFromOrigin;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -11,7 +12,7 @@ import java.util.List;
 
 // todo: introduce the abstraction of a cluster please, you know it's gonna be messy if you decide not to. It will cost
 //  you runtime.
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class KMeansImageProcessor {
 
     private PApplet processing;
@@ -87,7 +88,7 @@ public class KMeansImageProcessor {
         assert lastCentroids.size() == currentCentroids.size();
         for (int i = 0; i < lastCentroids.size(); i++) {
             float distanceFromPreviousToCurrentCentroid = lastCentroids.get(i).dist(currentCentroids.get(i));
-            if (distanceFromPreviousToCurrentCentroid > 0.002) {
+            if (distanceFromPreviousToCurrentCentroid > Float.MIN_VALUE) {
                 return false;
             }
         }

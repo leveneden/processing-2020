@@ -1,24 +1,37 @@
 package k_means_image_processor;
 
+import k_means_image_processor.layout.ImageAndPaletteLayout;
+import k_means_image_processor.model.KMeansImageProcessor;
+import k_means_image_processor.model.KMeansResult;
 import k_means_image_processor.model.sorting.DistanceFromOrigin;
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class KMeansImageProcessorApplication extends PApplet {
 
     @Override
     public void settings() {
-        size(1024, 1024);
+        size(343, 652);
     }
 
     @Override
     public void setup() {
-        testSortingOfPVectorObjects();
+        KMeansImageProcessor kMeans = new KMeansImageProcessor(this);
+        String imageLocation = "src/main/resources/k_means_image_processor/input/";
+        String imageName = "cut-bird.png";
+        String imagePath = imageLocation + imageName;
+        for (int k = 1; k <= 15; k++) {
+
+        KMeansResult result = kMeans.process(k, imagePath);
+        ImageAndPaletteLayout layout = new ImageAndPaletteLayout(result, imagePath);
+        layout.draw(this);
+        save(String.format("test_k-%d.png", k));
+            System.out.println(String.format("%d,%f", k, result.getWCSS()));
+        }
     }
 
     @Override
@@ -31,8 +44,9 @@ public class KMeansImageProcessorApplication extends PApplet {
         PApplet.main("k_means_image_processor.KMeansImageProcessorApplication");
     }
 
-    // todo: clean this mess
 
+    // todo: clean this mess
+    /*
     private void addRandomPVectorTo(List<PVector> centroids) {
         boolean add = centroids.add(new PVector((float) Math.random() * width, (float) Math.random() * height));
     }
@@ -44,10 +58,8 @@ public class KMeansImageProcessorApplication extends PApplet {
         System.out.println();
     }
 
-    private PVector getFurthestPVectorByComputingLongestNearestDistance(List<PVector> centroids, List<PVector> dataPoints) {
-        // for each datapoint get the nearest centroid
-        // if this distance to the nearest centroid is LONGER than the previous one, hold a reference to this distance and this datapoint
-        float longestDistanceToNearestCentroid = 0;
+    private PVector getFurthestPVectorByComputingLongestDistanceToNearestCentroid(List<PVector> centroids, List<PVector> dataPoints) {
+        float longestDistanceToNearestCentroid = Float.MIN_NORMAL;
         PVector furthestPoint = null;
         for (PVector dataPoint: dataPoints) {
             float distanceToNearestCentroid = dataPoint.dist(getNearestTo(dataPoint, centroids));
@@ -56,7 +68,6 @@ public class KMeansImageProcessorApplication extends PApplet {
                 furthestPoint = dataPoint;
             }
         }
-
         return furthestPoint;
     }
 
@@ -73,7 +84,7 @@ public class KMeansImageProcessorApplication extends PApplet {
     }
 
     private PVector getFurthestPVectorByComputingLargestSumOfDistances(List<PVector> centroids, List<PVector> dataPoints) {
-        float largestSumOfOfDistances = Float.MIN_VALUE;
+        float largestSumOfOfDistances = Float.MIN_NORMAL;
         PVector furthestPVector = null;
         for (PVector dataPoint: dataPoints) {
             float sumOfDistances = 0;
@@ -159,7 +170,7 @@ public class KMeansImageProcessorApplication extends PApplet {
         ellipse(methodB.x, methodB.y, reducedRadius -2, reducedRadius -2);
 
         fill(0, 0, 255);
-        PVector methodC = getFurthestPVectorByComputingLongestNearestDistance(centroids, datapoints);
+        PVector methodC = getFurthestPVectorByComputingLongestDistanceToNearestCentroid(centroids, datapoints);
         ellipse(methodC.x, methodC.y, reducedRadius - 4, reducedRadius - 4);
 
         // todo: consider turning this into three custom modes of initialization for the k means before deleting
@@ -194,4 +205,5 @@ public class KMeansImageProcessorApplication extends PApplet {
         vectors.sort(new DistanceFromOrigin());
         printAll(vectors);
     }
+     */
 }
