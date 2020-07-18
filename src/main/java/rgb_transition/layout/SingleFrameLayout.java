@@ -1,6 +1,6 @@
 package rgb_transition.layout;
 
-import common.Drawable;
+import common.stateless.Drawable;
 import processing.core.PApplet;
 import processing.core.PImage;
 import rgb_transition.model.RGBColorMapper;

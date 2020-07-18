@@ -1,6 +1,6 @@
 package fractal_mosaic.layout;
 
-import common.Drawable;
+import common.stateless.Drawable;
 import processing.core.PApplet;
 
 public class SingleMosaicLayout implements Drawable {

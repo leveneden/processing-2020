@@ -1,6 +1,6 @@
 package tracing_eyes.layout;
 
-import common.Drawable;
+import common.stateless.Drawable;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;

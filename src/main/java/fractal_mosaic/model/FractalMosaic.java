@@ -1,6 +1,6 @@
 package fractal_mosaic.model;
 
-import common.Drawable;
+import common.stateless.Drawable;
 import processing.core.PApplet;
 
 import java.awt.*;

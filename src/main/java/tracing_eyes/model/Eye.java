@@ -1,7 +1,7 @@
 package tracing_eyes.model;
 
-import common.Drawable;
-import common.Updatable;
+import common.stateless.Drawable;
+import common.stateful.Updatable;
 import lombok.Data;
 import processing.core.PApplet;
 import processing.core.PVector;

@@ -1,4 +1,4 @@
-package common;
+package common.stateless;
 
 import processing.core.PApplet;
 

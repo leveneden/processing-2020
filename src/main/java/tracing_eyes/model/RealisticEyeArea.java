@@ -1,7 +1,6 @@
 package tracing_eyes.model;
 
-import common.Drawable;
-import lombok.Setter;
+import common.stateless.Drawable;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;

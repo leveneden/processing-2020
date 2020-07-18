@@ -1,6 +1,6 @@
 package rgb_transition.model;
 
-import common.Drawable;
+import common.stateless.Drawable;
 import lombok.Setter;
 import processing.core.PApplet;
 import processing.core.PImage;
