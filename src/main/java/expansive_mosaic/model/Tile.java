@@ -51,19 +51,19 @@ public class Tile implements Drawable {
     }
 
     private int getUpperEdge() {
-        return location.y;
+        return Math.round(samplingPoint.y - width/2);
     }
 
     private int getLowerEdge() {
-        return location.y + width;
+        return Math.round(samplingPoint.y + width/2);
     }
 
     private int getRightEdge() {
-        return location.x + width;
+        return Math.round(samplingPoint.x + width/2);
     }
 
     private int getLeftEdge() {
-        return location.x;
+        return Math.round(samplingPoint.x - width/2);
     }
 
     private void fillTileContent() {

@@ -44,7 +44,7 @@ public class ExpansiveMosaic implements Drawable {
     }
 
     private void drawCentralTile() {
-        Point location = new Point(Math.round(samplingCenter.x - tileWidth/2), Math.round(samplingCenter.y - tileWidth/2));
+        Point location = new Point(drawingCenter.x - tileWidth/2, drawingCenter.y - tileWidth/2);
         getTileAt(location, samplingCenter).draw();
     }
 
