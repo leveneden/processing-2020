@@ -1,27 +1,30 @@
 package expansive_mosaic.model;
 
 import common.stateful.Drawable;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
+import java.awt.*;
+
 @Getter
 @Setter
 public class ExpansiveMosaic implements Drawable {
 
     private PImage image;
-    private PVector center;
+    private PVector samplingCenter;
+    private Point drawingCenter;
     private int tileWidth;
     private float expansionDistance;
     // distance mode (radial/square)
     private PApplet processing;
 
-    public ExpansiveMosaic(String imagePath, PVector center, int tileWidth, float expansionDistance, PApplet processing) {
+    public ExpansiveMosaic(String imagePath, PVector samplingCenter,Point drawingCenter, int tileWidth, float expansionDistance, PApplet processing) {
         this.image = processing.loadImage(imagePath);
-        this.center = center;
+        this.samplingCenter = samplingCenter;
+        this.drawingCenter = drawingCenter;
         this.tileWidth = tileWidth;
         this.expansionDistance = expansionDistance;
         this.processing = processing;
@@ -36,21 +39,34 @@ public class ExpansiveMosaic implements Drawable {
 
     @Override
     public void draw() {
-        // draw central tile
         drawCentralTile();
-        // draw tile rings (recursive)
-            // get sample positions (discriminate distance mode)
-            // get samples (tiles)
-            // draw tiles at their position
-
+        drawAllAdjacentTiles();
     }
 
     private void drawCentralTile() {
-        getTileAt(center).draw();
+        Point location = new Point(Math.round(samplingCenter.x - tileWidth/2), Math.round(samplingCenter.y - tileWidth/2));
+        getTileAt(location, samplingCenter).draw();
     }
 
-    private Tile getTileAt(PVector location) {
-        return new Tile(image, location, tileWidth, processing);
+    private Tile getTileAt(Point location, PVector samplingPoint) {
+        return new Tile(image, location, samplingPoint, tileWidth, processing);
+    }
+
+    private void drawAllAdjacentTiles() {
+        // create first tile frame
+        PVector firstTileFrameLocation = new PVector(
+                samplingCenter.x - tileWidth * 1.5f,
+                samplingCenter.y - tileWidth * 1.5f
+        );
+        TileFrame firstTileFrame = new TileFrame(image, firstTileFrameLocation, samplingCenter, expansionDistance, 8);
+        // draw it
+        firstTileFrame.draw();
+        // draw a recursive method that draws a ring around the previous
+        drawNextTileFrameRecursively(firstTileFrame);
+    }
+
+    private void drawNextTileFrameRecursively(TileFrame previousTileFrame) {
+
     }
 
 }
