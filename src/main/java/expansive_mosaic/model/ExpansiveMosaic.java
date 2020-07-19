@@ -55,10 +55,10 @@ public class ExpansiveMosaic implements Drawable {
     private void drawAllAdjacentTiles() {
         // create first tile frame
         PVector firstTileFrameLocation = new PVector(
-                samplingCenter.x - tileWidth * 1.5f,
-                samplingCenter.y - tileWidth * 1.5f
+                drawingCenter.x - tileWidth * 1.5f,
+                drawingCenter.y - tileWidth * 1.5f
         );
-        TileFrame firstTileFrame = new TileFrame(image, firstTileFrameLocation, samplingCenter, expansionDistance, 8);
+        TileFrame firstTileFrame = new TileFrame(image, firstTileFrameLocation, tileWidth, samplingCenter, expansionDistance, 8);
         // draw it
         firstTileFrame.draw();
         // draw a recursive method that draws a ring around the previous

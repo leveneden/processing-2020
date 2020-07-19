@@ -12,6 +12,7 @@ public class TileFrame implements Drawable {
 
     private PImage image;
     private PVector location;
+    private int tileWidth;
     private PVector samplingCenter;
     // distance mode
     // todo
@@ -25,8 +26,13 @@ public class TileFrame implements Drawable {
 
     @Override
     public void draw() {
-        // drawUpperRowOfTiles();
+
+        drawUpperRowOfTiles();
         // drawSideColumnsOfTiles();
         // drawLowerRowOfTiles();
+    }
+
+    private void drawUpperRowOfTiles() {
+
     }
 }

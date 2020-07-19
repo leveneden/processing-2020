@@ -8,7 +8,6 @@ import processing.core.PVector;
 
 import java.awt.*;
 
-@AllArgsConstructor
 public class Tile implements Drawable {
 
     private PImage image;
@@ -83,11 +82,17 @@ public class Tile implements Drawable {
 
     private int getColorAt(int x, int y, PImage image) {
         image.loadPixels();
-        try {
+
+        if (coordinatesAreWithinImageBounds(x, y, image)) {
             return image.pixels[x + y * image.width];
-        } catch (IndexOutOfBoundsException ex) {
+        } else {
             return EMPTY;
         }
+    }
+
+    // fixme: I'm unconfident about the upper limits here, future me
+    private boolean coordinatesAreWithinImageBounds(int x, int y, PImage image) {
+        return x < image.width && x >= 0 && y < image.height && y >= 0;
     }
 
 }
