@@ -14,14 +14,14 @@ import java.awt.*;
 public class ExpansiveMosaic implements Drawable {
 
     private PImage image;
-    private PVector samplingCenter;
+    private Point samplingCenter;
     private Point drawingCenter;
     private int tileWidth;
     private float expansionDistance;
     // distance mode (radial/square)
     private PApplet processing;
 
-    public ExpansiveMosaic(String imagePath, PVector samplingCenter,Point drawingCenter, int tileWidth, float expansionDistance, PApplet processing) {
+    public ExpansiveMosaic(String imagePath, Point samplingCenter,Point drawingCenter, int tileWidth, float expansionDistance, PApplet processing) {
         this.image = processing.loadImage(imagePath);
         this.samplingCenter = samplingCenter;
         this.drawingCenter = drawingCenter;
@@ -48,24 +48,31 @@ public class ExpansiveMosaic implements Drawable {
         getTileAt(location, samplingCenter).draw();
     }
 
-    private Tile getTileAt(Point location, PVector samplingPoint) {
+    private Tile getTileAt(Point location, Point samplingPoint) {
         return new Tile(image, location, samplingPoint, tileWidth, processing);
     }
 
     private void drawAllAdjacentTiles() {
-        // create first tile frame
-        PVector firstTileFrameLocation = new PVector(
-                drawingCenter.x - tileWidth * 1.5f,
-                drawingCenter.y - tileWidth * 1.5f
+        Point firstTileFrameLocation = new Point(
+                Math.round(drawingCenter.x - tileWidth * 1.5f),
+                Math.round(drawingCenter.y - tileWidth * 1.5f)
         );
-        TileFrame firstTileFrame = new TileFrame(image, firstTileFrameLocation, tileWidth, samplingCenter, expansionDistance, 8);
-        // draw it
+        TileFrame firstTileFrame = new TileFrame(image, firstTileFrameLocation, tileWidth, samplingCenter, expansionDistance, 8, processing);
         firstTileFrame.draw();
-        // draw a recursive method that draws a ring around the previous
-        drawNextTileFrameRecursively(firstTileFrame);
+        drawNextTileFrameRecursively(firstTileFrame, 8);
     }
 
-    private void drawNextTileFrameRecursively(TileFrame previousTileFrame) {
+    private void drawNextTileFrameRecursively(TileFrame previousTileFrame, int remainingSteps) {
+        if (remainingSteps > 0) {
+            Point currentLocation = new Point(
+                    previousTileFrame.getLocation().x - previousTileFrame.getTileWidth(),
+                    previousTileFrame.getLocation().y - previousTileFrame.getTileWidth()
+                    );
+            TileFrame currentFrame = new TileFrame(image, currentLocation, previousTileFrame.getTileWidth(), previousTileFrame.getSamplingCenter(), previousTileFrame.getDistanceFromSamplingCenter() + expansionDistance, previousTileFrame.getAmountOfTiles() + 8, processing);
+            currentFrame.draw();
+
+            drawNextTileFrameRecursively(currentFrame, remainingSteps - 1);
+        }
 
     }
 

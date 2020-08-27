@@ -12,7 +12,7 @@ public class Tile implements Drawable {
 
     private PImage image;
     private Point location;
-    private PVector samplingPoint;
+    private Point samplingPoint;
     private int width;
     private PApplet processing;
     private PImage tileContent;
@@ -20,7 +20,7 @@ public class Tile implements Drawable {
 
     private static final int EMPTY = -16776961; // #0000FF
 
-    public Tile(PImage image, Point location, PVector samplingPoint, int width, PApplet processing) {
+    public Tile(PImage image, Point location, Point samplingPoint, int width, PApplet processing) {
         this.image = image;
         this.location = location;
         this.samplingPoint = samplingPoint;
