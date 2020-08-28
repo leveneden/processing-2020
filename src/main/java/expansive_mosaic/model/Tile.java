@@ -1,12 +1,10 @@
 package expansive_mosaic.model;
 
 import common.stateful.Drawable;
-import lombok.AllArgsConstructor;
 import processing.core.PApplet;
 import processing.core.PImage;
-import processing.core.PVector;
 
-import java.awt.*;
+import java.awt.Point;
 
 public class Tile implements Drawable {
 

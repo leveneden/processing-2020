@@ -1,13 +1,13 @@
 package expansive_mosaic.model;
 
 import common.stateful.Drawable;
+import expansive_mosaic.model.constant.DistanceMode;
 import lombok.Getter;
 import lombok.Setter;
 import processing.core.PApplet;
 import processing.core.PImage;
-import processing.core.PVector;
 
-import java.awt.*;
+import java.awt.Point;
 
 @Getter
 @Setter
@@ -18,15 +18,18 @@ public class ExpansiveMosaic implements Drawable {
     private Point drawingCenter;
     private int tileWidth;
     private float expansionDistance;
-    // distance mode (radial/square)
+    private int numberOfFrames;
+    private DistanceMode distanceMode;
     private PApplet processing;
 
-    public ExpansiveMosaic(String imagePath, Point samplingCenter,Point drawingCenter, int tileWidth, float expansionDistance, PApplet processing) {
+    public ExpansiveMosaic(String imagePath, Point samplingCenter, Point drawingCenter, int tileWidth, float expansionDistance, int numberOfFrames, DistanceMode distanceMode, PApplet processing) {
         this.image = processing.loadImage(imagePath);
         this.samplingCenter = samplingCenter;
         this.drawingCenter = drawingCenter;
         this.tileWidth = tileWidth;
         this.expansionDistance = expansionDistance;
+        this.numberOfFrames = numberOfFrames;
+        this.distanceMode = distanceMode;
         this.processing = processing;
 
         image.loadPixels();
@@ -57,9 +60,9 @@ public class ExpansiveMosaic implements Drawable {
                 Math.round(drawingCenter.x - tileWidth * 1.5f),
                 Math.round(drawingCenter.y - tileWidth * 1.5f)
         );
-        TileFrame firstTileFrame = new TileFrame(image, firstTileFrameLocation, tileWidth, samplingCenter, expansionDistance, 8, processing);
+        TileFrame firstTileFrame = new TileFrame(image, firstTileFrameLocation, tileWidth, samplingCenter, expansionDistance, 8, distanceMode, processing);
         firstTileFrame.draw();
-        drawNextTileFrameRecursively(firstTileFrame, 8);
+        drawNextTileFrameRecursively(firstTileFrame, numberOfFrames);
     }
 
     private void drawNextTileFrameRecursively(TileFrame previousTileFrame, int remainingSteps) {
@@ -68,7 +71,7 @@ public class ExpansiveMosaic implements Drawable {
                     previousTileFrame.getLocation().x - previousTileFrame.getTileWidth(),
                     previousTileFrame.getLocation().y - previousTileFrame.getTileWidth()
                     );
-            TileFrame currentFrame = new TileFrame(image, currentLocation, previousTileFrame.getTileWidth(), previousTileFrame.getSamplingCenter(), previousTileFrame.getDistanceFromSamplingCenter() + expansionDistance, previousTileFrame.getAmountOfTiles() + 8, processing);
+            TileFrame currentFrame = new TileFrame(image, currentLocation, previousTileFrame.getTileWidth(), previousTileFrame.getSamplingCenter(), previousTileFrame.getDistanceFromSamplingCenter() + expansionDistance, previousTileFrame.getAmountOfTiles() + 8,previousTileFrame.getDistanceMode(), processing);
             currentFrame.draw();
 
             drawNextTileFrameRecursively(currentFrame, remainingSteps - 1);
