@@ -1,7 +1,7 @@
 package criptographic_squares.model;
 
-import common.Drawable;
-import common.Updatable;
+import common.stateless.Drawable;
+import common.stateful.Updatable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import processing.core.PApplet;

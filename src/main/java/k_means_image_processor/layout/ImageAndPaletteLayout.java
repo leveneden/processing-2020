@@ -1,6 +1,6 @@
 package k_means_image_processor.layout;
 
-import common.Drawable;
+import common.stateless.Drawable;
 import k_means_image_processor.model.Cluster;
 import k_means_image_processor.model.KMeansResult;
 import lombok.AllArgsConstructor;

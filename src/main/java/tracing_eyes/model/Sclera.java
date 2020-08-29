@@ -1,6 +1,6 @@
 package tracing_eyes.model;
 
-import common.Drawable;
+import common.stateless.Drawable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import processing.core.PApplet;
