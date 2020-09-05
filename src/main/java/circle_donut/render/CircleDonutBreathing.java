@@ -11,7 +11,7 @@ public class CircleDonutBreathing implements Renderable {
     private CircleDonutBreathingSettings settings;
     private PApplet processing;
 
-    private float currentOffset = 90;
+    private float currentOffset = 270;
     private final float CIRCLES_DIAMETER_CONSTANT;
 
     public CircleDonutBreathing(CircleDonutBreathingSettings settings, PApplet processing) {
@@ -31,7 +31,6 @@ public class CircleDonutBreathing implements Renderable {
         new CircleDonut(buildCircleDonutSettings(), processing).draw();
 
         increaseCurrentOffset();
-
     }
 
     private CircleDonutSettings buildCircleDonutSettings() {
@@ -50,20 +49,11 @@ public class CircleDonutBreathing implements Renderable {
     }
 
     private float getProportionalCirclesDiameter() {
-        // System.out.println("C: " + CIRCLES_DIAMETER_CONSTANT + ". x/2: " + getCentralNegativeSpaceDiameter() / 2 + ". y: " + (CIRCLES_DIAMETER_CONSTANT - (getCentralNegativeSpaceDiameter() / 2)));
-
-        return (CIRCLES_DIAMETER_CONSTANT + (getCentralNegativeSpaceDiameter() / 2));
+        return CIRCLES_DIAMETER_CONSTANT + (getCentralNegativeSpaceDiameter() / 2);
     }
 
     private float getCentralNegativeSpaceDiameter() {
         float sine = PApplet.map(PApplet.sin(PApplet.radians(currentOffset)), -1, 1, 0,1);
-        // fixme: remove me, I'm here for debugging purposes
-        if (sine == 1) {
-            System.out.println("upper bound. currentOffset = " + currentOffset + ". irclesDiameter = " + settings.circlesDiameter + ". centralNegativeSpace = " +  (settings.centralNegativeSpaceDiameter + (sine * settings.breathingExpansionDistance)));
-        } else if (sine == 0) {
-            System.out.println("lower bound. currentOffset = " + currentOffset + ". irclesDiameter = " + settings.circlesDiameter + ". centralNegativeSpace = " +  (settings.centralNegativeSpaceDiameter + (sine * settings.breathingExpansionDistance)));
-        }
-
         return settings.centralNegativeSpaceDiameter + (sine * settings.breathingExpansionDistance);
     }
 

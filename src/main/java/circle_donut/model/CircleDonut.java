@@ -49,7 +49,7 @@ public class CircleDonut implements Drawable {
     }
 
     private void drawCircle() {
-        processing.ellipse(0, 0 - (settings.centralNegativeSpaceDiameter/2) - (settings.circlesDiameter/2), settings.circlesDiameter, settings.circlesDiameter);
+        processing.ellipse(0, (settings.centralNegativeSpaceDiameter/2) - (settings.circlesDiameter/2), settings.circlesDiameter, settings.circlesDiameter);
     }
 
     private int calculateColorForCurrentCircle(int circleIndex) {
