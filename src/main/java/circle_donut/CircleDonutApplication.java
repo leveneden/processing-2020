@@ -27,6 +27,10 @@ public class CircleDonutApplication extends PApplet {
 
     @Override
     public void setup() {
+        int green = color(75, 184, 75);
+        int blue = color(42, 195, 203);
+        int red = color(221, 61, 47);
+
         background(20);
         CircleDonutBreathingSettings renderSettings = CircleDonutBreathingSettings.builder()
                 .center(new Point(width/2, height/2))
@@ -42,7 +46,7 @@ public class CircleDonutApplication extends PApplet {
         CircleDonutSettings donutSettings = CircleDonutSettings.builder()
                 .strokeWeight(1)
                 .numberOfCircles(200)
-                .colors(new int[] {color(75, 184, 75), color(42, 195, 203)})
+                .colors(new int[] {blue, green})
                 .circlesDiameter(440)
                 .centralNegativeSpaceDiameter(0)
                 .center(new Point(width/2, height/2))
@@ -62,7 +66,7 @@ public class CircleDonutApplication extends PApplet {
             background(20);
             donut.draw();
             //breather.render();
-            save(OUTPUT_DIR + "IG.png");
+            save(OUTPUT_DIR + "IG.v3.png");
             //saveFrame(i);
         }
 
