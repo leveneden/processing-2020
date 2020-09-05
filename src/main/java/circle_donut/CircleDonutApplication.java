@@ -65,8 +65,8 @@ public class CircleDonutApplication extends PApplet {
         for (int i =0; i<1; i++) {
             background(20);
             donut.draw();
-            //breather.render();
-            save(OUTPUT_DIR + "IG.v3.png");
+            breather.render();
+            save(OUTPUT_DIR + "IG.001.png");
             //saveFrame(i);
         }
 

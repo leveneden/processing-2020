@@ -11,7 +11,7 @@ public class CircleDonutBreathing implements Renderable {
     private CircleDonutBreathingSettings settings;
     private PApplet processing;
 
-    private float currentOffset;
+    private float currentOffset = 90;
     private final float CIRCLES_DIAMETER_CONSTANT;
 
     public CircleDonutBreathing(CircleDonutBreathingSettings settings, PApplet processing) {
@@ -68,10 +68,18 @@ public class CircleDonutBreathing implements Renderable {
     }
 
     private void increaseCurrentOffset() {
-        currentOffset += settings.breathingsSpeed;
+        currentOffset = ((currentOffset - 90 + settings.breathingsSpeed) % 360) + 90;
     }
 
     private float createCirclesDiameterConstant() {
         return (settings.centralNegativeSpaceDiameter / 2f) + settings.circlesDiameter;
+    }
+
+    public boolean isFullyExpanded() {
+        return currentOffset == 450;
+    }
+
+    public boolean isFullyContracted() {
+        return currentOffset == 90;
     }
 }
