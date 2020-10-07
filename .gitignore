@@ -4,6 +4,7 @@
 src/main/resources/tracing_eyes/render/*
 src/main/resources/rgb-transition/output/*
 src/main/resources/expansive_mosaic/output/*
+src/main/resources/circle_donut/*
 
 ##############################
 ## Processing
